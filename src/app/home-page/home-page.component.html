@@ -1,0 +1,71 @@
+<div class="btn-toolbar">
+  <div class="btn-group">
+		<button type="button" class="btn btn-info" icon="fa-plus" (click)="showDialog()"><span class="glyphicon glyphicon-plus-sign">&nbsp;</span>New</button>
+		<button type="button" class="btn btn-default" icon="fa-plus" [routerLink]="['/mealsList']"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Meals</button>
+  </div>
+</div>
+<br/>
+
+<div>
+	<div class="row">
+		<div *ngFor="let item of itemMenu">
+			<div class="col-md-2">
+				<div class="panel panel-primary menu-day">
+					<div class="panel-heading">
+							{{item.dayName | uppercase}} [{{item.recDate}}]
+					</div>
+					<div class="panel-body" *ngFor="let detail of item.details">
+						<span>
+							<b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}
+						</span>
+						<button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="editMeal()"><span class="glyphicon glyphicon-edit"></span></button>
+						<p *ngIf="detail.notification">Note: {{detail.notification}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<p-dialog header="Add Dayly Meal" [(visible)]="visibleDialog" closable="true"
+    responsive="true" showEffect="fade"  [modal]="true" ng-switch="80%">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="mealWeek">
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="type" class="col-lg-2 control-label">Date</label></div>
+            <div class="ui-grid-col-8">
+                <input type="date" [(ngModel)]="mealWeek.recDate" value="{{mealWeek.recDate| date: 'dd/MM/yyyy'}}"  class="form-control" id="date" placeholder="Date" required>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="type" class="col-lg-2 control-label">Type</label></div>
+            <div class="ui-grid-col-8">
+              <select class="form-control" id="type" [(ngModel)]="type" (change)="onSelect($event.target.value)">
+                <option value="1" selected>Breckfast</option>
+                <option value="2">Lunch</option>
+                <option value="3">Dinner</option>
+              </select>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="meal" class="col-lg-2 control-label">Meal</label></div>
+            <div class="ui-grid-col-8">
+              <select class="form-control" id="meal" [(ngModel)]="mealId" required (change)="onSelectMeal($event.target.value)">
+                <option *ngFor="let item of meals" value="{{item.idRec}}">{{item.nameRec}}</option>
+              </select>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="type" class="col-lg-2 control-label">With</label></div>
+            <div class="ui-grid-col-8">
+              <input class="form-control" [(ngModel)]="mealWeek.recWith" type="text" id="complement" placeholder="Complement">
+            </div>
+      </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="saveMeal()" ><span class="glyphicon glyphicon-edit">&nbsp;</span>Save</button>
+					<span>&nbsp;</span>
+					<button (click)="closeDialog()" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
+        </div>
+    </p-footer>
+</p-dialog>

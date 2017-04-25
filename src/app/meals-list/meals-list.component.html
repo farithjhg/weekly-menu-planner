@@ -1,0 +1,64 @@
+<div *ngIf="showMessage" class="alert alert-success box-msg" role="alert">
+    <strong>{{message}}</strong>  Your changes has been saved.
+</div>
+
+<div class="ui-helper-clearfix" style="width:100%">
+  <button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="showDialog()"><span class="glyphicon glyphicon-plus-sign">&nbsp;</span>Add</button>
+  <span>&nbsp;</span>
+  <button [routerLink]="['/home']" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
+</div>
+<hr/>
+<p-dataTable [value]="meals" selectionMode="single" [(selection)]="selected" [globalFilter]="gb" #dt
+     (onRowSelect)="onRowSelect($event)" [responsive]="true">
+    <p-header>Meals</p-header>
+    <p-column field="nameRec" header="Description" [filter]="true" [sortable]="true"></p-column>
+    <p-column field="nameType" header="Type" [filter]="true" [sortable]="true"></p-column>
+    <p-column field="weekendText" header="Weekends (S/N)" [filter]="true" [sortable]="true"></p-column>
+</p-dataTable>
+
+
+<p-dialog header="Meal Details" [(visible)]="displayDialog" closable="true"
+    responsive="true" showEffect="fade"  [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="meal">
+      <div class="ui-grid-row" *ngIf="meal.idRec">
+            <div class="ui-grid-col-4"><label for="id" class="col-lg-2 control-label">Id</label></div>
+            <div class="ui-grid-col-8">
+                <input class="form-control" type="text" [(ngModel)]="meal.idRec" id="id" readonly>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="type" class="col-lg-2 control-label">Type</label></div>
+            <div class="ui-grid-col-8">
+              <select class="form-control" id="type" [(ngModel)]="meal.typeRec" (change)="onSelect($event.target.value)">
+                <option value="1">Breckfast</option>
+                <option value="2">Lunch</option>
+                <option value="3">Dinner</option>
+              </select>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="weekend" class="col-lg-2 control-label">Weekend</label></div>
+            <div class="ui-grid-col-8">
+              <select class="form-control" id="weekend" [(ngModel)]="meal.weekend" (change)="onSelect($event.target.value)">
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+      </div>
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="description" class="col-lg-2 control-label">Description</label></div>
+            <div class="ui-grid-col-8"><input class="form-control" type="text" [(ngModel)]="meal.nameRec" id="description" placeholder="Description" ng-required="true"></div>
+      </div>      
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="url" class="col-lg-2 control-label">URL</label></div>
+            <div class="ui-grid-col-8"><input class="form-control" type="text" [(ngModel)]="meal.urlRec" id="url" placeholder="URL"></div>
+      </div>      
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" class="btn btn-info"(click)="close()">Close</button>
+            <button type="button" class="btn btn-danger" (click)="deleteMeal()" *ngIf="!new">Delete</button>
+            <button type="button" class="btn btn-info" (click)="save()">Save</button>
+        </div>
+    </p-footer>
+</p-dialog>

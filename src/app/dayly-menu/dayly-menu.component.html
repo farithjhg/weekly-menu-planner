@@ -1,0 +1,40 @@
+<div class="panel panel-default form-horizontal">
+  <div class="panel-heading">Dayly Menu</div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label for="type" class="col-lg-2 control-label">Type</label>
+      <div class="col-lg-10">
+        <select class="form-control" id="type" [(ngModel)]="meal.typeRec" (change)="onSelect($event.target.value)">
+         <option value="1">Breckfast</option>
+         <option value="2">Lunch</option>
+         <option value="3">Dinner</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weekend" class="col-lg-2 control-label">Weekend</label>
+      <div class="col-lg-10">
+        <select class="form-control" id="weekend" [(ngModel)]="meal.weekend" (change)="onSelect($event.target.value)">
+         <option value="1">Si</option>
+         <option value="0">No</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="col-lg-2 control-label">Description</label>
+      <div class="col-lg-10">
+         <input class="form-control" type="text" [(ngModel)]="meal.nameRec" id="description" placeholder="Description" ng-required="true">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="url" class="col-lg-2 control-label">URL</label>
+      <div class="col-lg-10">
+         <input class="form-control" type="text" [(ngModel)]="meal.urlRec" id="url" placeholder="URL">
+      </div>
+    </div>
+     <div class="panel-footer">
+        <button [routerLink]="['/home']" class="btn btn-default"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
+        <button (click)="saveMeal()" class="btn btn-primary"><span class="glyphicon glyphicon-ok">&nbsp;</span>Save</button>
+     </div>
+  </div>
+</div>
