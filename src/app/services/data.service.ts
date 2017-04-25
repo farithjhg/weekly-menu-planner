@@ -8,6 +8,8 @@ import {Meal} from '../model/Meal'
 export class DataService {
   private _urlMenu  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu";
   private _urlDaylyAdd  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu/add";
+  private _urlDaylyUpdate  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu/update";
+
   private _urlMealById   = "https://weekly-menu-planner.herokuapp.com/rest/recipes/findById/";
   private _urlMeals = "https://weekly-menu-planner.herokuapp.com/rest/recipes/getByType/";
   private _urlRecipeAdd  = "https://weekly-menu-planner.herokuapp.com/rest/recipes/add";
@@ -19,6 +21,9 @@ export class DataService {
 
   constructor(public http: Http) { }
   
+  /**
+   * Get the actual weekly menu
+   */
   getMenu() :Observable<ItemMenu[]>{
     let authToken = localStorage.getItem('token');
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -32,6 +37,10 @@ export class DataService {
        .catch(this.handleError); 
   }  
 
+  /**
+   * Add a Recipe to the DB 
+   * @param body 
+   */
   addRecipe (body: Object): Observable<any> {
     let authToken = localStorage.getItem('token');
     let bodyString = JSON.stringify(body); // Stringify payload
@@ -47,6 +56,11 @@ export class DataService {
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
  }   
 
+
+/**
+ * Update a Recipe 
+ * @param body 
+ */
   updateRecipe (body: Object): Observable<any> {
     let authToken = localStorage.getItem('token');
     let bodyString = JSON.stringify(body); // Stringify payload
@@ -62,6 +76,9 @@ export class DataService {
                          .catch(this.handleError); 
  }   
 
+ /**
+  * Delete a Recipe from DB
+  */
   deleteRecipe (id: Number): Observable<any> {
     let authToken = localStorage.getItem('token');
 
@@ -76,6 +93,10 @@ export class DataService {
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
  }   
 
+ /**
+  * Get a List of Meals by Type
+  * @param type 
+  */
   getMealsByType(type :number) :Observable<Meal[]>{
     let authToken = localStorage.getItem('token');
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -90,6 +111,10 @@ export class DataService {
        .catch(this.handleError); 
   }  
 
+  /**
+   * Get a Meal by Id
+   * @param id 
+   */
   getMealsById(id :number) :Observable<Meal>{
     let authToken = localStorage.getItem('token');
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -104,6 +129,10 @@ export class DataService {
        .catch(this.handleError); 
   } 
 
+  /**
+   * Add a new Dayly Menu in DB
+   * @param body
+   */
   addDaylyMeal (body: Object): Observable<any> {
     let authToken = localStorage.getItem('token');
     let bodyString = JSON.stringify(body); 
@@ -119,6 +148,23 @@ export class DataService {
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
  }   
 
+  updateDaylyMeal (body: Object): Observable<any> {
+    let authToken = localStorage.getItem('token');
+    let bodyString = JSON.stringify(body); // Stringify payload
+    
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', `Bearer ${authToken}`);
+
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.put(this._urlDaylyUpdate , bodyString, options) 
+                         .map((res:Response) => res.json())
+                         .catch(this.handleError); 
+ }   
+
+  /**
+   * Get a List of Meal
+   */
   getMealsList() :Observable<Meal[]>{
     let authToken = localStorage.getItem('token');
     let headers = new Headers({ 'Content-Type': 'application/json' });

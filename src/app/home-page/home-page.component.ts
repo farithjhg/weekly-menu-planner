@@ -22,6 +22,9 @@ export class HomePageComponent implements OnInit {
   types : Object[];
   meals : Meal[];
   mealId : number;
+  edit : boolean = false;
+  noteDialog : boolean = false;
+  note : String;
 
   constructor(public router: Router ,private loginService: LoginService, private dataService : DataService) {}
 
@@ -44,7 +47,18 @@ export class HomePageComponent implements OnInit {
                      );
   }
   
-    getMealsByType(type : number){
+  closeNoteDialog(){
+    this.noteDialog = false;
+  }
+  addNoteDialog(){
+    this.noteDialog = true;
+  }
+
+  /**
+   * Get Meals by Type
+   * @param type 
+   */
+  getMealsByType(type : number){
         this.dataService.getMealsByType(type).subscribe(
                        (response:Array<Meal>) => {
                          this.meals = response;
@@ -59,15 +73,30 @@ export class HomePageComponent implements OnInit {
     if(this.mealWeek.recId == null){
         alert('Meal is Required!');
     }else{
-    this.dataService.addDaylyMeal(this.mealWeek).subscribe(
-                response => {
-                  this.mealWeek = response;
-                  this.visibleDialog = false;
-                },
-                error => {
-                  alert(error);
-                }
-              );
+      if(this.edit){
+        this.dataService.updateDaylyMeal(this.mealWeek).subscribe(
+                    response => {
+                      this.mealWeek = response;
+                      this.visibleDialog = false;
+                      this.getMenu();
+                    },
+                    error => {
+                      alert(error);
+                    }
+                  );
+      }else{
+        this.dataService.addDaylyMeal(this.mealWeek).subscribe(
+                    response => {
+                      this.mealWeek = response;
+                      this.visibleDialog = false;
+                      this.getMenu();
+                    },
+                    error => {
+                      alert(error);
+                    }
+                  );
+
+      }
     }
   }
 
@@ -82,6 +111,20 @@ export class HomePageComponent implements OnInit {
   showDialog(){
     this.visibleDialog = true;
     this.mealWeek = new MealWeek();
+    this.edit = false;
+  }
+
+  editDialog(id:number, recId : number, 
+      type : number, date:Date){
+    this.mealId = recId;
+    this.visibleDialog = true;
+    this.mealWeek = new MealWeek();
+    this.type = type;
+    this.mealWeek.rwId = id;
+    this.mealWeek.recId = recId;
+    this.mealWeek.recDate = date;
+    this.edit = true;
+    this.getMealsByType(type);
   }
 
   closeDialog(){

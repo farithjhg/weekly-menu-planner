@@ -1,7 +1,7 @@
 <div class="btn-toolbar">
   <div class="btn-group">
 		<button type="button" class="btn btn-info" icon="fa-plus" (click)="showDialog()"><span class="glyphicon glyphicon-plus-sign">&nbsp;</span>New</button>
-		<button type="button" class="btn btn-default" icon="fa-plus" [routerLink]="['/mealsList']"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Meals</button>
+		<button type="button" class="btn btn-default" icon="fa-plus" [routerLink]="['/mealsList']"><span class="glyphicon glyphicon-list">&nbsp;</span>Meals</button>
   </div>
 </div>
 <br/>
@@ -18,7 +18,13 @@
 						<span>
 							<b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}
 						</span>
-						<button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="editMeal()"><span class="glyphicon glyphicon-edit"></span></button>
+						<button type="button" class="btn btn-info" icon="fa-plus" style="float:right"
+										(click)="editDialog(detail.rwId, detail.recId, detail.typeRec, item.recDate)"><span class="glyphicon glyphicon-edit"></span></button>
+						<span></span>
+						<button type="button" class="btn btn-primary" icon="fa-plus" style="float:right" 
+										(click)="addNoteDialog(detail.rwId)"><span class="glyphicon glyphicon-tasks"></span></button>
+
+										
 						<p *ngIf="detail.notification">Note: {{detail.notification}}</p>
 					</div>
 				</div>
@@ -27,10 +33,22 @@
 	</div>
 </div>
 
-<p-dialog header="Add Dayly Meal" [(visible)]="visibleDialog" closable="true"
+<p-dialog header="Dayly Meal" [(visible)]="visibleDialog" closable="true"
     responsive="true" showEffect="fade"  [modal]="true" ng-switch="80%">
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="mealWeek">
-      <div class="ui-grid-row">
+      <div class="ui-grid-row" *ngIf="edit">
+            <div class="ui-grid-col-4"><label for="id" class="col-lg-2 control-label">Id</label></div>
+            <div class="ui-grid-col-8">
+								<input class="form-control" type="text" [(ngModel)]="mealWeek.rwId" id="id" readonly>
+            </div>
+      </div>
+      <div class="ui-grid-row" *ngIf="edit">
+            <div class="ui-grid-col-4"><label for="dateEdit" class="col-lg-2 control-label">Date</label></div>
+            <div class="ui-grid-col-8">
+								<input class="form-control" type="text" [(ngModel)]="mealWeek.recDate" id="dateEdit" readonly>
+            </div>
+      </div>
+      <div class="ui-grid-row" *ngIf="!edit">
             <div class="ui-grid-col-4"><label for="type" class="col-lg-2 control-label">Date</label></div>
             <div class="ui-grid-col-8">
                 <input type="date" [(ngModel)]="mealWeek.recDate" value="{{mealWeek.recDate| date: 'dd/MM/yyyy'}}"  class="form-control" id="date" placeholder="Date" required>
@@ -66,6 +84,22 @@
 					<button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="saveMeal()" ><span class="glyphicon glyphicon-edit">&nbsp;</span>Save</button>
 					<span>&nbsp;</span>
 					<button (click)="closeDialog()" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Add/Edit Notes" [(visible)]="noteDialog" closable="true"
+    responsive="true" showEffect="fade"  [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="description" class="col-lg-2 control-label">Note:</label></div>
+            <div class="ui-grid-col-8"><textarea class="form-control" rows="3" id="description" placeholder="Note" ng-required="true"></textarea></div>
+      </div>      
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" class="btn btn-info"(click)="closeNoteDialog()">Close</button>
+            <button type="button" class="btn btn-info" (click)="save()">Save</button>
         </div>
     </p-footer>
 </p-dialog>
