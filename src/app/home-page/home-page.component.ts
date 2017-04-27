@@ -37,7 +37,6 @@ export class HomePageComponent implements OnInit {
     this.mealWeek = new MealWeek();
     this.mealWeek.recDate = new Date();
     this.mealWeek.recDateCre = new Date();
-    this.getMealsByType(this.type);
     
     this.loginService.login().subscribe(
                        response => {
@@ -164,6 +163,7 @@ export class HomePageComponent implements OnInit {
     this.visibleDialog = true;
     this.mealWeek = new MealWeek();
     this.edit = false;
+    this.getMealsByType(this.type);
   }
 
   editDialog(id:number, recId : number, 
