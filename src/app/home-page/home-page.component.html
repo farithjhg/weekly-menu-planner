@@ -109,7 +109,7 @@
     <p-footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
             <button type="button" class="btn btn-danger"(click)="closeNoteDialog()">Close</button>
-						<button type="button" class="btn btn-success" (click)="doneNote()">Done</button>
+						<button type="button" class="btn btn-success" *ngIf="noteValue" (click)="doneNote()">Done</button>
             <button type="button" class="btn btn-info" (click)="saveNote()">Save</button>
         </div>
     </p-footer>
