@@ -15,17 +15,24 @@
 							{{item.dayName | uppercase}} [{{item.recDate}}]
 					</div>
 					<div class="panel-body" *ngFor="let detail of item.details">
-						<span>
-							<b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}
-						</span>
-						<button type="button" class="btn btn-info" icon="fa-plus" style="float:right"
+						<div class="row">
+							<div class="col-sm-9" style="background-color:lavender;">
+								<b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}
+							</div>
+							<div class="col-sm-2">
+								<button type="button" class="btn btn-info" icon="fa-plus" style="float:left"
 										(click)="editDialog(detail.rwId, detail.recId, detail.typeRec, item.recDate)"><span class="glyphicon glyphicon-edit"></span></button>
-						<span></span>
-						<button type="button" class="btn btn-primary" icon="fa-plus" style="float:right" 
-										(click)="addNoteDialog(detail.rwId)"><span class="glyphicon glyphicon-tasks"></span></button>
-
-										
-						<p *ngIf="detail.notification">Note: {{detail.notification}}</p>
+							</div>
+						</div>					
+						<div class="row">
+							<div class="col-sm-9" style="background-color:silver;">
+							  <b>Notes:</b> {{detail.notification}} <span *ngIf="detail.doneNote" class="glyphicon glyphicon-ok-sign"></span>
+							</div>
+							<div class="col-sm-2">
+										<button type="button" class="btn btn-primary" icon="fa-plus" style="float:left" 
+								(click)="addNoteDialog(detail.rwId, detail.notification, detail.idNot)"><span class="glyphicon glyphicon-tasks"></span></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -93,13 +100,17 @@
     <div class="ui-grid ui-grid-responsive ui-fluid">
       <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="description" class="col-lg-2 control-label">Note:</label></div>
-            <div class="ui-grid-col-8"><textarea class="form-control" rows="3" id="description" placeholder="Note" ng-required="true"></textarea></div>
+            <div class="ui-grid-col-8">
+							<textarea class="form-control" [(ngModel)]='noteValue' rows="3" cols="20" id="description" placeholder="Description">
+							</textarea>
+						</div>
       </div>      
     </div>
     <p-footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" class="btn btn-info"(click)="closeNoteDialog()">Close</button>
-            <button type="button" class="btn btn-info" (click)="save()">Save</button>
+            <button type="button" class="btn btn-danger"(click)="closeNoteDialog()">Close</button>
+						<button type="button" class="btn btn-success" (click)="doneNote()">Done</button>
+            <button type="button" class="btn btn-info" (click)="saveNote()">Save</button>
         </div>
     </p-footer>
 </p-dialog>

@@ -6,6 +6,7 @@ import {ItemMenu} from '../model/ItemMenu'
 import {PanelModule} from 'primeng/primeng';
 import {Meal} from '../model/Meal';
 import {MealWeek} from '../model/MealWeek';
+import {Note} from '../model/Note';
 import {DataService} from '../services/data.service';
 
 @Component({
@@ -24,7 +25,9 @@ export class HomePageComponent implements OnInit {
   mealId : number;
   edit : boolean = false;
   noteDialog : boolean = false;
-  note : String;
+  note : Note;
+  description : string;
+  noteValue : string;
 
   constructor(public router: Router ,private loginService: LoginService, private dataService : DataService) {}
 
@@ -49,11 +52,60 @@ export class HomePageComponent implements OnInit {
   
   closeNoteDialog(){
     this.noteDialog = false;
-  }
-  addNoteDialog(){
-    this.noteDialog = true;
+    this.note = null;
   }
 
+  addNoteDialog(rwId:number, note : string, idNot : number){
+    console.log('IdNot', idNot);
+    this.noteDialog = true;
+    this.note = new Note();
+    this.note.dateCre = new Date();
+    this.note.rwId = rwId;
+    this.note.id = idNot;
+    this.edit = idNot != null;
+    this.noteValue = note;
+    this.note.description = this.noteValue;
+  }
+
+  doneNote(){
+      this.note.done = 1;
+      this.dataService.updateNote(this.note).subscribe(
+                  response => {
+                    this.noteDialog = false;
+                    this.closeNoteDialog();
+                    this.getMenu();
+                  },
+                  error => {
+                    alert(error);
+                  }
+                );    
+  }
+  saveNote(){
+    this.note.description = this.noteValue;
+    if(this.edit){
+      this.dataService.updateNote(this.note).subscribe(
+                  response => {
+                    this.noteDialog = false;
+                    this.closeNoteDialog();
+                    this.getMenu();
+                  },
+                  error => {
+                    alert(error);
+                  }
+                );
+    }else{
+      this.dataService.addNote(this.note).subscribe(
+                  response => {
+                    this.noteDialog = false;
+                    this.closeNoteDialog();
+                    this.getMenu();
+                  },
+                  error => {
+                    alert(error);
+                  }
+                );
+    }
+  }
   /**
    * Get Meals by Type
    * @param type 

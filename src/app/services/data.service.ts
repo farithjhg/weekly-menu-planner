@@ -6,18 +6,23 @@ import {Meal} from '../model/Meal'
 
 @Injectable()
 export class DataService {
+
+  private _BASE_URL = "https://weekly-menu-planner.herokuapp.com";
+  //Dayly Menu URLs
   private _urlMenu  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu";
   private _urlDaylyAdd  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu/add";
   private _urlDaylyUpdate  = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu/update";
-
+  //Meals URLs
   private _urlMealById   = "https://weekly-menu-planner.herokuapp.com/rest/recipes/findById/";
   private _urlMeals = "https://weekly-menu-planner.herokuapp.com/rest/recipes/getByType/";
   private _urlRecipeAdd  = "https://weekly-menu-planner.herokuapp.com/rest/recipes/add";
   private _urlRecipeUpdate = "https://weekly-menu-planner.herokuapp.com/rest/recipes/update";
   private _urlRecipeDelete = "https://weekly-menu-planner.herokuapp.com/rest/recipes/delete/";
-  
   private _urlMealList = "https://weekly-menu-planner.herokuapp.com/rest/recipes/all";
-  
+  //Notes URLs
+  private _urlNoteAdd = this._BASE_URL+"/rest/notes/add";  
+  private _urlNoteUpdate = this._BASE_URL+"/rest/notes/update";  
+  private _urlNoteByDaylyMenu = this._BASE_URL+"/rest/notes/findByRwId/";  
 
   constructor(public http: Http) { }
   
@@ -36,6 +41,44 @@ export class DataService {
        .map((res:Response) => res.json())
        .catch(this.handleError); 
   }  
+
+  /**
+   * Add a Note to the DB 
+   * @param body 
+   */
+  addNote (body: Object): Observable<any> {
+    let authToken = localStorage.getItem('token');
+    let bodyString = JSON.stringify(body); 
+    
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', `Bearer ${authToken}`);
+
+    let options = new RequestOptions({ headers: headers });
+
+
+    return this.http.post(this._urlNoteAdd , bodyString, options) 
+                         .map((res:Response) => res.json()) 
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+ }   
+
+/**
+ * Update a Recipe 
+ * @param body 
+ */
+  updateNote (body: Object): Observable<any> {
+    let authToken = localStorage.getItem('token');
+    let bodyString = JSON.stringify(body); 
+    
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', `Bearer ${authToken}`);
+
+    let options = new RequestOptions({ headers: headers });
+
+
+    return this.http.put(this._urlNoteUpdate, bodyString, options) 
+                         .map((res:Response) => res.json())
+                         .catch(this.handleError); 
+  }
 
   /**
    * Add a Recipe to the DB 
