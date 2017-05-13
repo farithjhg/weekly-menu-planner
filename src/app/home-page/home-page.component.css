@@ -36,3 +36,7 @@
 .ui-dialog.ui-dialog-responsive {
         width: 90% !important;
 }
+
+#_ngcontent-c1 li:hover {
+    cursor: pointer;
+}
