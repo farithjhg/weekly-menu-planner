@@ -5,12 +5,13 @@ import {ItemMenu} from '../model/ItemMenu'
 
 @Injectable()
 export class LoginService {
-    private OauthLoginUrl = 'https://weekly-menu-planner.herokuapp.com/oauth/token';
+	private _BASE_URL = "https://mymenu.services.piviyorkdev.com";
+	private OauthLoginUrl = this._BASE_URL+"/oauth/token";
     private clientId = '0912747597133';
     private secretId = '33b17e044ee6a4fa383f46ec6e28ea1d';
     private userName = 'admin';
     private password = 'master';
-    private _urlGetMenu = "https://weekly-menu-planner.herokuapp.com/rest/weeklymenu/actual"
+    private _urlGetMenu = this._BASE_URL+"/rest/weeklymenu/actual"
     data:Array<Object>; 
     
     constructor(public http: Http) { }
