@@ -8,6 +8,7 @@ import {Meal} from '../model/Meal';
 import {MealWeek} from '../model/MealWeek';
 import {Note} from '../model/Note';
 import {DataService} from '../services/data.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home-page',
@@ -34,13 +35,11 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
     this.type = 1;
     this.types = [{"Value":1, "label" : "Breckfast"}, {"Value":2, "label" : "Lunch"}];
-    this.mealWeek = new MealWeek();
-    this.mealWeek.recDate = new Date();
-    this.mealWeek.recDateCre = new Date();
-    
+    //mostrar Loading
     this.loginService.login().subscribe(
                        response => {
                           localStorage.setItem('token', response.access_token);
+                          //loading.close();
                           this.getMenu();
                        },
                        error => {
@@ -127,7 +126,6 @@ export class HomePageComponent implements OnInit {
       if(this.edit){
         this.dataService.updateDaylyMeal(this.mealWeek).subscribe(
                     response => {
-                      this.mealWeek = response;
                       this.visibleDialog = false;
                       this.getMenu();
                     },
@@ -162,12 +160,14 @@ export class HomePageComponent implements OnInit {
   showDialog(){
     this.visibleDialog = true;
     this.mealWeek = new MealWeek();
+    this.mealWeek.recDate = moment().format('YYYY-MM-DD');
+    this.mealWeek.recDateCre = new Date();
     this.edit = false;
     this.getMealsByType(this.type);
   }
 
   editDialog(id:number, recId : number, 
-      type : number, date:Date){
+      type : number, date:string){
     this.mealId = recId;
     this.visibleDialog = true;
     this.mealWeek = new MealWeek();

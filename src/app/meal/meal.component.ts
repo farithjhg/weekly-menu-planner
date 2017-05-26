@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Meal} from '../model/Meal';
 import {MealWeek} from '../model/MealWeek';
 import {DataService} from '../services/data.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-meal',
@@ -23,7 +24,7 @@ export class MealComponent implements OnInit {
     this.type = 1;
     this.types = [{"Value":1, "label" : "Breckfast"}, {"Value":2, "label" : "Lunch"}];
     this.mealWeek = new MealWeek();
-    this.mealWeek.recDate = new Date();
+    this.mealWeek.recDate =  moment().format('YYYY-MM-DD');
     this.mealWeek.recDateCre = new Date();
     this.getMealsByType(this.type);
   }

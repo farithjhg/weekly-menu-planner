@@ -3,7 +3,7 @@ import { Component} from '@angular/core';
 
 export class MealWeek {
     public rwId: number; 
-    public recDate: Date; 
+    public recDate: string; 
     public recWith: string;
     public recDateCre: Date;
     public recId : number;
