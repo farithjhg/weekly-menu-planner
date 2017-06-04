@@ -33,28 +33,35 @@ export class HomePageComponent implements OnInit {
   constructor(public router: Router ,private loginService: LoginService, private dataService : DataService) {}
 
   ngOnInit() {
-    this.type = 1;
-    this.types = [{"Value":1, "label" : "Breckfast"}, {"Value":2, "label" : "Lunch"}];
-    //mostrar Loading
-    this.loginService.login().subscribe(
-                       response => {
-                          localStorage.setItem('token', response.access_token);
-                          //loading.close();
-                          this.getMenu();
-                       },
-                       error => {
-                        alert(error);
-                       }
-                     );
+    //Get Meals
+    let authToken = localStorage.getItem('token');
+    
+    if(authToken != null && !this.isTokenExpired()){
+      this.getMenu();
+    }           
   }
   
+  isTokenExpired() : Boolean {
+    let expires_in = localStorage.getItem('expires_in');
+    if(expires_in == null)
+       return true;
+
+    return Math.round(new Date().getTime()/1000.0) > new Number(expires_in)  ;
+   }  
+
+  /**
+   * Close the Note Dialog
+   */ 
   closeNoteDialog(){
     this.noteDialog = false;
     this.note = null;
   }
 
+
+  /**
+   * Show the Notes Dialog
+   */
   addNoteDialog(rwId:number, note : string, idNot : number){
-    console.log('IdNot', idNot);
     this.noteDialog = true;
     this.note = new Note();
     this.note.dateCre = new Date();
@@ -65,6 +72,9 @@ export class HomePageComponent implements OnInit {
     this.note.description = this.noteValue;
   }
 
+/**
+ * Update the Note with status DONE
+ */
   doneNote(){
       this.note.done = 1;
       this.dataService.updateNote(this.note).subscribe(
@@ -78,6 +88,10 @@ export class HomePageComponent implements OnInit {
                   }
                 );    
   }
+  
+  /**
+   * Save notes
+   */
   saveNote(){
     this.note.description = this.noteValue;
     if(this.edit){

@@ -36,7 +36,7 @@ export class AppComponent {
           
           let authToken = localStorage.getItem('token');
     
-          if(authToken == null || this.isTokenExpired()){          
+          //if(authToken == null || this.isTokenExpired()){          
               this.loginService.login().subscribe(
                                  response => {
                                     localStorage.setItem('token', response.access_token);
@@ -46,11 +46,11 @@ export class AppComponent {
                                     localStorage.setItem('expires_in', milisec+"");
                                  },
                                  error => {
-                                  alert(error);
+                                  alert("Login "+error);
                                  }
                                );
             
-          }
+          //}
           
           this.isLoggedIn = true;
           this.router.navigate(['home']);

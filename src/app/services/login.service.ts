@@ -7,15 +7,14 @@ import {ItemMenu} from '../model/ItemMenu'
 export class LoginService {
 	private _BASE_URL = "https://mymenu.services.piviyorkdev.com";
 	private OauthLoginUrl = this._BASE_URL+"/oauth/token";
-    private clientId = '0912747597133';
-    private secretId = '33b17e044ee6a4fa383f46ec6e28ea1d';
-    private userName = 'admin';
-    private password = 'master';
-    private _urlGetMenu = this._BASE_URL+"/rest/weeklymenu/actual"
-    data:Array<Object>; 
+  private clientId = '0912747597133';
+  private secretId = '33b17e044ee6a4fa383f46ec6e28ea1d';
+  private userName = 'admin';
+  private password = 'master';
+  private _urlGetMenu = this._BASE_URL+"/rest/weeklymenu/actual"
+  data:Array<Object>; 
     
-    constructor(public http: Http) { }
-
+  constructor(public http: Http) { }
 
   createAuthorizationHeader(headers:Headers) {
     headers.append('Authorization', 'Basic ' +btoa(this.clientId+':'+this.secretId)); 
@@ -36,7 +35,10 @@ export class LoginService {
      
       return this.http.post(this.OauthLoginUrl, params, options)
         .map(this.handleData)
-        .catch(this.handleError);      
+        .catch( (error:any) => {
+          console.log(error);
+          return Observable.throw(error.json().error || 'Server error')
+        });      
   }
   
   getMenu() :Observable<ItemMenu[]>{
