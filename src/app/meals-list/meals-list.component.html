@@ -5,7 +5,7 @@
 <div class="ui-helper-clearfix" style="width:100%">
   <button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="showDialog()"><span class="glyphicon glyphicon-plus-sign">&nbsp;</span>Add</button>
   <span>&nbsp;</span>
-  <button [routerLink]="['/home']" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
+  <button [routerLink]="['']" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
 </div>
 <hr/>
 <p-dataTable [value]="meals" selectionMode="single" [(selection)]="selected" [globalFilter]="gb" #dt

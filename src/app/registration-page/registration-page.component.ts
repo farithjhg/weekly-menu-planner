@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FbService} from "../services/fb.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -10,23 +9,11 @@ import {Router} from "@angular/router";
 export class RegistrationPageComponent implements OnInit {
 
   public error: any;
-  constructor(private afService: FbService, private router: Router) { }
+  constructor(private router: Router) { }
 	
 	//registers the user and logs them in
   register(event, name, email, password) {
     event.preventDefault();
-    this.afService.registerUser(email, password).then((user) => {
-      this.afService.saveUserInfoFromForm(user.uid, name, email).then(() => {
-        this.router.navigate(['']);
-      })
-        .catch((error) => {
-          this.error = error;
-        });
-    })
-      .catch((error) => {
-        this.error = error;
-        console.log(this.error);
-      });
   }
   
   ngOnInit() {

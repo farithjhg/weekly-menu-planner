@@ -16,6 +16,7 @@ import * as moment from 'moment';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+  public error : string;
   private itemMenu : ItemMenu[];
   private visibleDialog : boolean = false;
   date : Date;
@@ -30,15 +31,19 @@ export class HomePageComponent implements OnInit {
   description : string;
   noteValue : string;
 
-  constructor(public router: Router ,private loginService: LoginService, private dataService : DataService) {}
-
-  ngOnInit() {
-    //Get Meals
+  constructor(private router: Router, private dataService : DataService){
     let authToken = localStorage.getItem('token');
     
     if(authToken != null && !this.isTokenExpired()){
-      this.getMenu();
-    }           
+      console.log("Successfully Logged in.");
+    }else{
+      console.log("Not Logged in.");
+      this.router.navigate(['login']);
+    }
+  }
+
+  ngOnInit() {
+    this.getMenu();
   }
   
   isTokenExpired() : Boolean {
@@ -199,14 +204,24 @@ export class HomePageComponent implements OnInit {
   }
 
   getMenu(){
-    this.loginService.getMenu().subscribe(
+    this.dataService.getMenu().subscribe(
                        response => {
                          this.itemMenu = response;
                        },
                        error => {
-                        alert(error);
+                         let errorObj : TokenError = JSON.parse(error._body.toString());
+                         if(errorObj.error=='invalid_token'){
+                           this.router.navigate(['login']);
+                         }
+                         this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                         console.log(this.error);
                        }
                      );   
-  }
+  }    
+}
 
+
+interface TokenError {
+    error: string;
+    error_description: string;
 }

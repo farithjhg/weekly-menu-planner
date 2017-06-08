@@ -1,0 +1,49 @@
+.user-menu>.dropdown-menu {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    padding: 2px;
+    border-top-width: 0;
+    width: 280px;
+    right: 5%;
+    left: auto;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.user-header{
+    height: 175px;
+    padding: 10px;
+    text-align: center;
+}
+
+.user-image{
+    float:left;
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    margin-right:10px;
+    margin-top:-2px
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+li.user-header {
+    background-color: #f39c12;
+}
+
+.user-footer {
+    background-color: #f9f9f9;
+    height: 48px;
+    padding: 10px;
+}
+
+li.user-header>img {
+    z-index: 5;
+    height: 90px;
+    width: 90px;
+    border: 3px solid;
+    border-color: transparent;
+    border-color: rgba(255,255,255,0.2);
+}

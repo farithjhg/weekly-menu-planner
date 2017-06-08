@@ -23,18 +23,8 @@ import { MealComponent } from './meal/meal.component';
 import { DaylyMenuComponent } from './dayly-menu/dayly-menu.component';
 import { MealsListComponent } from './meals-list/meals-list.component';
 
-// Must export the config
-export const firebaseConfig = {
-  apiKey: "AIzaSyD2cXXQu3WSmNTPhJh1HYR20kjGc0WLumQ",
-  authDomain: "myweeklymenuplanner.firebaseapp.com",
-  databaseURL: "https://myweeklymenuplanner.firebaseio.com",
-  storageBucket: "myweeklymenuplanner.appspot.com",
-  messagingSenderId: "769907540512"
-};
-
 const routes: Routes = [
-  { path: '', component: AppComponent },
-  { path: 'home', component: HomePageComponent },
+  { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegistrationPageComponent},
   { path: 'newMeal', component: MealComponent},
@@ -53,7 +43,6 @@ const routes: Routes = [
     MealsListComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(firebaseConfig),
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     BrowserModule,

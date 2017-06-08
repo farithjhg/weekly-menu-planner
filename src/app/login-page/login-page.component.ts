@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FbService} from "../services/fb.service";
 import {Router} from "@angular/router";
+import {LoginService} from "../services/login.service";
 
 @Component({
   selector: 'app-login-page',
@@ -10,30 +10,43 @@ import {Router} from "@angular/router";
 export class LoginPageComponent implements OnInit {
 
   public error: any;
-  constructor(public afService: FbService, private router: Router) {}
-  
-  loginWithGoogle() {
-    this.afService.loginWithGoogle().then((data) => {
-      // Send them to the homepage if they are logged in
-      this.afService.addUserInfo();
-      this.router.navigate(['home']);
-    })
+  constructor(private loginService : LoginService, private router: Router) {}
+
+  ngOnInit() {
   }
   
   loginWithEmail(event, email, password){
     event.preventDefault();
-    this.afService.loginWithEmail(email, password).then(() => {
-      this.router.navigate(['home']);
-    })
-      .catch((error: any) => {
-        if (error) {
-          this.error = error;
+    this.loginService.login(email, password).subscribe(
+      response => {
+        let token = response.access_token;
+        if(token != null){
+          localStorage.setItem('user', email);
+          localStorage.setItem('token', response.access_token);
+          var expires_in : number = <number>response.expires_in;
+          var milisec : number = Math.round(new Date().getTime()/1000.0) + expires_in;
+          
+          localStorage.setItem('expires_in', milisec+"");
+          this.router.navigate(['']);
+        }
+      },
+      error => {
+        console.log(error._body);
+        if (error._body instanceof ProgressEvent ) {
+          console.log("ProgressEvent");
+          
+          this.error = 'Error: Services are down!';
+        }else{
+          let errorObj : MyError = JSON.parse(error._body.toString());
+          this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
           console.log(this.error);
         }
       });
   }
+}
 
-  ngOnInit() {
-  }
 
+interface MyError {
+    error: string;
+    error_description: string;
 }

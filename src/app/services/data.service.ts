@@ -3,13 +3,14 @@ import {Http, URLSearchParams, Response, Headers, RequestOptions} from '@angular
 import {Observable} from 'rxjs/Rx'
 import {ItemMenu} from '../model/ItemMenu'
 import {Meal} from '../model/Meal'
+import {AppSettings} from '../model/AppSettings';
 
 @Injectable()
 export class DataService {
 
-  private _BASE_URL = "https://mymenu.services.piviyorkdev.com";
+  private _BASE_URL = AppSettings.BASE_URL;
   //Dayly Menu URLs
-  private _urlMenu  = this._BASE_URL+"/rest/weeklymenu";
+  private _urlMenu  = this._BASE_URL+"/rest/weeklymenu/actual";
   private _urlDaylyAdd  = this._BASE_URL+"/rest/weeklymenu/add";
   private _urlDaylyUpdate  = this._BASE_URL+"/rest/weeklymenu/update";
   //Meals URLs
