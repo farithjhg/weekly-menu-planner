@@ -20,7 +20,7 @@ export class HomePageComponent implements OnInit {
   private itemMenu : ItemMenu[];
   private visibleDialog : boolean = false;
   date : Date;
-  type : number;
+  type : number = 1;
   mealWeek : MealWeek;
   types : Object[];
   meals : Meal[];
