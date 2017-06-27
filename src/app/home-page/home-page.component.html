@@ -13,17 +13,22 @@
             <h3 class="panel-title">{{item.dayName | uppercase}} [{{item.recDate}}]</h3>
           </div>
           <div class="panel-body">
-    		   <div class="col-md-4" *ngFor="let detail of item.details">
-    			<div class="row">
-    			    <ul class="nav nav-pills nav-stacked">
-                      <li>
-                          <a (click)="editDialog(detail.rwId, detail.recId, detail.typeRec, item.recDate)"><b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}</a>
-                      </li>
-                      <li class="active">
-                          <a (click)="addNoteDialog(detail.rwId, detail.notification, detail.idNot)"><b>Notes:</b> {{detail.notification}}&nbsp;<span *ngIf="detail.doneNote" class="glyphicon glyphicon-ok-sign" style="color:#00FF00;"></span> <span *ngIf="!detail.doneNote && detail.notification" class="glyphicon glyphicon-asterisk" style="color:red;"></span></a>
-                      </li>
-                    </ul>
-    			</div>
+    		  <div class="col-md-4" *ngFor="let detail of item.details">
+    			  <div class="row">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <span class="badge"><a *ngIf="detail.url" href='{{detail.url}}' target="_blank"><span class="glyphicon glyphicon-link"></span></a></span>
+                  <a (click)="editDialog(detail.rwId, detail.recId, detail.typeRec, item.recDate)">
+                    <b>{{detail.type}}:</b>&nbsp;{{detail.menu + detail.menuWith}}
+                  </a>
+                </li>
+                <li class="list-group-item">
+                  <a (click)="addNoteDialog(detail.rwId, detail.notification, detail.idNot)" class="list-group-item">
+                    <b>Notes:</b> {{detail.notification}}&nbsp;<span *ngIf="detail.doneNote" class="glyphicon glyphicon-ok-sign" style="color:#00FF00;"></span> <span *ngIf="!detail.doneNote && detail.notification" class="glyphicon glyphicon-asterisk" style="color:red;"></span>
+                  </a>
+                </li>
+              </ul>              
+          </div>
     		</div>
           </div>
         </div>

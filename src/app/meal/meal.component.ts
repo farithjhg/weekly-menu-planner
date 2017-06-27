@@ -10,12 +10,13 @@ import * as moment from 'moment';
   styleUrls: ['./meal.component.css']
 })
 export class MealComponent implements OnInit {
-  date : Date;
-  type : number;
-  mealWeek : MealWeek;
-  types : Object[];
-  meals : Meal[];
-  mealId : number;
+  public error : String;
+  public date : Date;
+  public type : number;
+  public mealWeek : MealWeek;
+  public types : Object[];
+  public meals : Meal[];
+  public mealId : number;
   
   constructor(private dataService : DataService) { 
   }
@@ -35,7 +36,7 @@ export class MealComponent implements OnInit {
                          this.meals = response;
                        },
                        error => {
-                        alert(error);
+                        this.error = error;
                        }
                      );   
 

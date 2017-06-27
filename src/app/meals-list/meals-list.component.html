@@ -2,6 +2,12 @@
     <strong>{{message}}</strong>  Your changes has been saved.
 </div>
 
+<div *ngIf="error" class="alert alert-warning" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+</div>
+
 <div class="ui-helper-clearfix" style="width:100%">
   <button type="button" class="btn btn-info" icon="fa-plus" style="float:right" (click)="showDialog()"><span class="glyphicon glyphicon-plus-sign">&nbsp;</span>Add</button>
   <span>&nbsp;</span>
@@ -19,6 +25,14 @@
 
 <p-dialog header="Meal Details" [(visible)]="displayDialog" closable="true"
     responsive="true" showEffect="fade"  [modal]="true">
+
+    <div *ngIf="error" class="alert alert-warning" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+    </div>
+
+
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="meal">
       <div class="ui-grid-row" *ngIf="meal.idRec">
             <div class="ui-grid-col-4"><label for="id" class="col-lg-2 control-label">Id</label></div>

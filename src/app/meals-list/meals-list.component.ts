@@ -15,6 +15,7 @@ export class MealsListComponent implements OnInit {
   meal : Meal;
   showMessage : boolean = false;
   message : string;
+  public error : String;
   
   constructor(private dataService : DataService) { 
     
@@ -26,7 +27,7 @@ export class MealsListComponent implements OnInit {
                          this.meals = response;
                        },
                        error => {
-                        alert(error);
+                        this.error = error;
                        }
                      );   
   }
@@ -48,7 +49,7 @@ export class MealsListComponent implements OnInit {
                         this.showMessage = true;
                        },
                        error => {
-                        alert(error);
+                        this.error = error._body;
                        }
                      );
     setTimeout(function() {
@@ -70,7 +71,7 @@ export class MealsListComponent implements OnInit {
                         
                        },
                        error => {
-                        alert(error);
+                        this.error = error;
                        }
                      );  
     }else{
@@ -80,7 +81,7 @@ export class MealsListComponent implements OnInit {
                         this.showMessage = true;
                        },
                        error => {
-                        alert(error);
+                        this.error = error._body;
                        }
                      );  
     }

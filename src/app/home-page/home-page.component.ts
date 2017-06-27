@@ -89,7 +89,12 @@ export class HomePageComponent implements OnInit {
                     this.getMenu();
                   },
                   error => {
-                    alert(error);
+                    let errorObj : TokenError = JSON.parse(error._body.toString());
+                    if(errorObj.error=='invalid_token'){
+                      this.router.navigate(['login']);
+                    }
+                    this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                    console.log(this.error);
                   }
                 );    
   }
@@ -107,7 +112,12 @@ export class HomePageComponent implements OnInit {
                     this.getMenu();
                   },
                   error => {
-                    alert(error);
+                    let errorObj : TokenError = JSON.parse(error._body.toString());
+                    if(errorObj.error=='invalid_token'){
+                      this.router.navigate(['login']);
+                    }
+                    this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                    console.log(this.error);
                   }
                 );
     }else{
@@ -118,7 +128,12 @@ export class HomePageComponent implements OnInit {
                     this.getMenu();
                   },
                   error => {
-                    alert(error);
+                    let errorObj : TokenError = JSON.parse(error._body.toString());
+                    if(errorObj.error=='invalid_token'){
+                      this.router.navigate(['login']);
+                    }
+                    this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                    console.log(this.error);
                   }
                 );
     }
@@ -133,7 +148,12 @@ export class HomePageComponent implements OnInit {
                          this.meals = response;
                        },
                        error => {
-                        alert(error);
+                         let errorObj : TokenError = JSON.parse(error._body.toString());
+                         if(errorObj.error=='invalid_token'){
+                           this.router.navigate(['login']);
+                         }
+                         this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                         console.log(this.error);
                        }
                      );   
 
@@ -149,7 +169,12 @@ export class HomePageComponent implements OnInit {
                       this.getMenu();
                     },
                     error => {
-                      alert(error);
+                      let errorObj : TokenError = JSON.parse(error._body.toString());
+                      if(errorObj.error=='invalid_token'){
+                        this.router.navigate(['login']);
+                      }
+                      this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                      console.log(this.error);
                     }
                   );
       }else{
@@ -160,7 +185,12 @@ export class HomePageComponent implements OnInit {
                       this.getMenu();
                     },
                     error => {
-                      alert(error);
+                      let errorObj : TokenError = JSON.parse(error._body.toString());
+                      if(errorObj.error=='invalid_token'){
+                        this.router.navigate(['login']);
+                      }
+                      this.error = 'Error: '+errorObj.error+' ['+errorObj.error_description+']';
+                      console.log(this.error);
                     }
                   );
 
