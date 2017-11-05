@@ -10,7 +10,7 @@ export class LoginService {
 
   login(userName : string, password : string) : Observable<any> {
      let headers = new Headers({ 'Authorization': 'Basic ' +btoa(AppSettings.CLIENTE_ID +':'+AppSettings.SECRET_ID)});
-
+     
      let options       = new RequestOptions({ headers: headers }); 
      let OauthLoginUrl = AppSettings.BASE_URL + '/oauth/token';
      let params : URLSearchParams = new URLSearchParams();

@@ -4,18 +4,53 @@
   {{error}}
 </div>
 
-<div class="modal-dialog">
-  <div class="loginmodal-container">
-  <fieldset>
-    <legend class="label-defaul">Sign in to start your session</legend>
-    <form class="form-signin" (submit)="loginWithEmail($event, email.value, password.value)">
-      <label for="email" class="sr-only">Email address</label>
-      <input #email type="email" id="email" class="form-control" placeholder="Email address">
-      <label for="password" class="sr-only">Password</label>
-      <input #password type="password" id="password" class="form-control" placeholder="Password" required="">
-      <br>
-      <button class="btn btn-md btn-default btn-block" type="submit">Sign in</button>
-    </form>
-    </fieldset>
+<div class="loginColumns animated fadeInDown">
+  <div class="row">
+      <div class="col-md-6">
+          <h2 class="font-bold">Welcome to My Menu Planner</h2>
+          <h2 class="font-bold">Sign in to start your session</h2>
+          <p>
+            Easily create meal plans for yourself or others and track nutritional information per meal.  
+          </p>
+          <p>
+            Manage your own recipes and import new ones from popular recipe web sites.
+          </p>
+          <p>
+            Keep track of what you have in your pantry (and how many), and integrate it all into your shopping list in one application! 
+          </p>
+      </div>
+      <div class="col-md-6">
+          <div class="ibox-content">
+              <form class="m-t" role="form" (submit)="loginWithEmail($event, email.value, password.value)">
+                  <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <input type="email" id="email" class="form-control" placeholder="Username" required="">
+                  </div>
+                  <div class="input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input type="password" id="password" class="form-control" placeholder="Password" required="">
+                  </div>
+                  <button type="submit" class="btn btn-primary block full-width m-b">Sing In</button>
+
+                  <a href="#">
+                      <small>Forgot password?</small>
+                  </a>
+
+                  <p class="text-muted text-center">
+                      <small>Do not have an account?</small>
+                  </p>
+                  <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
+              </form>
+          </div>
+      </div>
+  </div>
+  <hr>
+  <div class="row">
+      <div class="col-md-6">
+          Copyright Wolfsoftco
+      </div>
+      <div class="col-md-6 text-right">
+         <small>© 2017-2020</small>
+      </div>
   </div>
 </div>

@@ -14,8 +14,7 @@
   <button [routerLink]="['']" class="btn btn-danger" style="float:right"><span class="glyphicon glyphicon-remove">&nbsp;</span>Cancel</button>
 </div>
 <hr/>
-<p-dataTable [value]="meals" selectionMode="single" [(selection)]="selected" [globalFilter]="gb" #dt
-     (onRowSelect)="onRowSelect($event)" [responsive]="true">
+<p-dataTable [value]="meals" selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelect($event)" [responsive]="true">
     <p-header>Meals</p-header>
     <p-column field="nameRec" header="Description" [filter]="true" [sortable]="true"></p-column>
     <p-column field="nameType" header="Type" [filter]="true" [sortable]="true"></p-column>
